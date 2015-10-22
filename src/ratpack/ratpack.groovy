@@ -4,6 +4,7 @@ import geoand.ratdatajpa.book.service.BookService
 import geoand.ratdatajpa.customer.model.Customer
 import geoand.ratdatajpa.customer.service.CustomerService
 import org.springframework.boot.SpringApplication
+import org.springframework.context.ApplicationContext
 import ratpack.exec.Blocking
 
 import static ratpack.groovy.Groovy.ratpack
@@ -13,8 +14,12 @@ import static ratpack.spring.Spring.spring
 
 ratpack {
 
-  handlers {
-      register(spring(SpringApplication.run(SpringConfig)))
+  bindings {
+      bindInstance(ApplicationContext, SpringApplication.run(SpringConfig))
+  }
+
+  handlers {  ApplicationContext ctx ->
+      register(spring(ctx))
 
       /**
        * Customer

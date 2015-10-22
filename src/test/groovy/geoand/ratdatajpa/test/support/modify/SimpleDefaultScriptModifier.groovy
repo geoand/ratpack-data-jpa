@@ -16,6 +16,9 @@ class SimpleDefaultScriptModifier implements DefaultScriptModifier {
 
     @Override
     void ensureRatpackDoesntLaunchExplicitSpringContext() {
-        file.text = file.text.replaceFirst(/register\s*\(.*\)/, "//Spring registration was removed")
+        file.text = file.text
+                .replaceFirst(/register\s*\(.*\)/, "//Spring registration was removed")
+                .replaceFirst(/bindInstance\s*\(\s*ApplicationContext.*\)/, "//Spring binding was removed")
+                .replaceFirst(/ApplicationContext\s+ctx\s+->/, "//context injection removed")
     }
 }
